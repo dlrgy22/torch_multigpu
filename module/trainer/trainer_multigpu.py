@@ -48,21 +48,24 @@ class MultiGPUTrainer():
             image, label = image.to(self.cfg.device[0]), label.to(self.cfg.device[1])
             batch_size = image.size(0)
 
-            with autocast():
-                preds = self.model(image)
-                loss = self.loss_fn(preds, label)
+            # with autocast():
+            preds = self.model(image)
+            loss = self.loss_fn(preds, label)
             
             preds = torch.argmax(preds, 1).detach().cpu().numpy()
             acc = accuracy_score(preds, label.detach().cpu())
 
             losses.update(loss.item(), batch_size)
             accuracy_scores.update(acc, batch_size)
-            
+
             self.optimizer.zero_grad()
-            self.scaler.scale(loss).backward()
-            self.scaler.unscale_(self.optimizer)
-            self.scaler.step(self.optimizer)
-            self.scaler.update()
+            loss.backward()
+            self.optimizer.step()
+            # self.optimizer.zero_grad()
+            # self.scaler.scale(loss).backward()
+            # self.scaler.unscale_(self.optimizer)
+            # self.scaler.step(self.optimizer)
+            # self.scaler.update()
 
             description = f"TRAIN  EPOCH {epoch} loss: {losses.avg: .4f} acc: {accuracy_scores.avg: .4f}"
             pbar.set_description(description)

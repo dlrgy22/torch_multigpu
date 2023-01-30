@@ -68,7 +68,9 @@ class Trainer():
             self.optimizer.zero_grad()
             loss.backward()
             self.optimizer.step()
+            # self.optimizer.zero_grad()
             # self.scaler.scale(loss).backward()
+            # self.scaler.unscale_(self.optimizer)
             # self.scaler.step(self.optimizer)
             # self.scaler.update()
 
