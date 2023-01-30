@@ -3,7 +3,7 @@
 ```bash
 003.churn_modeling
 ├── data
-│   └── input                  # input data (parquet) 
+│   └── input                  # input data
 │       ├── ...     
 │       ├── ...
 │       └── ...
@@ -48,6 +48,7 @@ python data_distribute.py --config cfg_baseline
 ```
 data distribute (ddp)
 ```bash
+python -m torch.distributed.launch --nproc_per_node=4 train_script.py --config cfg_baseline
 ```
 model distribute (ddp)
 ```bash
