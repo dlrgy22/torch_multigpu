@@ -27,6 +27,9 @@
 ├── data_distribute.py  
 └── model_distribute.py  
 ```
+### data
+BIRDS 450 SPECIES- IMAGE CLASSIFICATION
+https://www.kaggle.com/datasets/gpiosenka/100-bird-species
 
 ### config
 - train_file : 학습에 사용될 이미지의 위치가 저장되어있는 csv파일
